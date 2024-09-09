@@ -33,6 +33,7 @@ fn header(page_title: &str) -> Markup {
             meta charset="utf-8";
             title { (page_title) }
             script src="https://unpkg.com/htmx.org@2.0.2/dist/htmx.js" integrity="sha384-yZq+5izaUBKcRgFbxgkRYwpHhHHCpp5nseXp0MEQ1A4MTWVMnqkmcuFez8x5qfxr" crossorigin="anonymous" { }
+            link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" { }
         }
     }
 }
@@ -60,10 +61,15 @@ fn index() -> Markup {
         html {
             (header("News"))
             body {
-                h1 { "Post!" }
-                ul {
-                    @for post in &posts {
-                        (post_list_item(&post))
+                header {
+                    h1 { "vg-forum" }
+                }
+                main class="container" {
+                    h2 { "Post!" }
+                    ul {
+                        @for post in &posts {
+                            (post_list_item(&post))
+                        }
                     }
                 }
             }
