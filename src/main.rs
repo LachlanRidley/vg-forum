@@ -27,6 +27,15 @@ impl Post {
     }
 }
 
+fn page(content: Markup) -> Markup {
+    html! {
+        (DOCTYPE)
+        html {
+            (content)
+        }
+    }
+}
+
 fn header(page_title: &str) -> Markup {
     html! {
         head {
@@ -56,33 +65,32 @@ fn index() -> Markup {
 
     let posts = vec![post, post2];
 
-    html! {
-        (DOCTYPE)
-        html {
-            (header("News"))
-            body {
-                header {
-                    h1 { "vg-forum" }
-                }
-                main class="container" {
-                    h2 { "Post!" }
-                    ul {
-                        @for post in &posts {
-                            (post_list_item(&post))
-                        }
+    page(html! {
+        (header("News"))
+        body {
+            header {
+                h1 { "vg-forum" }
+            }
+            main class="container" {
+                h2 { "Post!" }
+                ul {
+                    @for post in &posts {
+                        (post_list_item(&post))
                     }
                 }
             }
         }
-    }
+    })
 }
 
 #[post("/updoot")]
 fn updoot() -> Markup {
     let post = Post::new("test-1", "First post!", "https://www.google.com");
-    let post2 = Post::new("test-2", "Second post!", "https://www.google.com");
+    let mut post2 = Post::new("test-2", "Second post!", "https://www.google.com");
 
-    let posts = vec![post, post2];
+    post2.up_doot();
+
+    let _posts = vec![post, post2];
 
     html! {
         "clicked!"
